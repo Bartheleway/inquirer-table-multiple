@@ -29,6 +29,7 @@ const RAW_RUNTIME_STATE =
           ["@inquirer/core", "npm:7.1.0"],\
           ["@inquirer/testing", "npm:2.1.14"],\
           ["@types/inquirer", "npm:9.0.7"],\
+          ["@types/node", "npm:20.12.7"],\
           ["@typescript-eslint/eslint-plugin", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.3.1"],\
           ["@typescript-eslint/parser", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.3.1"],\
           ["@vitest/coverage-v8", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:1.4.0"],\
@@ -111,6 +112,7 @@ const RAW_RUNTIME_STATE =
           ["@inquirer/core", "npm:7.1.0"],\
           ["@inquirer/testing", "npm:2.1.14"],\
           ["@types/inquirer", "npm:9.0.7"],\
+          ["@types/node", "npm:20.12.7"],\
           ["@typescript-eslint/eslint-plugin", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.3.1"],\
           ["@typescript-eslint/parser", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.3.1"],\
           ["@vitest/coverage-v8", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:1.4.0"],\
@@ -848,6 +850,14 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-node-npm-20.12.2-bd2dd1ab12-bb47d115a8.zip/node_modules/@types/node/",\
         "packageDependencies": [\
           ["@types/node", "npm:20.12.2"],\
+          ["undici-types", "npm:5.26.5"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:20.12.7", {\
+        "packageLocation": "./.yarn/cache/@types-node-npm-20.12.7-3bb3d3303d-dce80d63a3.zip/node_modules/@types/node/",\
+        "packageDependencies": [\
+          ["@types/node", "npm:20.12.7"],\
           ["undici-types", "npm:5.26.5"]\
         ],\
         "linkType": "HARD"\
@@ -3770,6 +3780,45 @@ const RAW_RUNTIME_STATE =
           "terser"\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["virtual:b1637b7e68af143ee39e18d1ad26ac0e216979d0f6539c6b3603924da4e9dec17f78cf51def1481cb661be6a93cea48d143457e017b1fab8739190fb703a381b#npm:5.2.7", {\
+        "packageLocation": "./.yarn/__virtual__/vite-virtual-4ec3c800ef/0/cache/vite-npm-5.2.7-1f49e4d865-ca927a8df3.zip/node_modules/vite/",\
+        "packageDependencies": [\
+          ["vite", "virtual:b1637b7e68af143ee39e18d1ad26ac0e216979d0f6539c6b3603924da4e9dec17f78cf51def1481cb661be6a93cea48d143457e017b1fab8739190fb703a381b#npm:5.2.7"],\
+          ["@types/less", null],\
+          ["@types/lightningcss", null],\
+          ["@types/node", "npm:20.12.7"],\
+          ["@types/sass", null],\
+          ["@types/stylus", null],\
+          ["@types/sugarss", null],\
+          ["@types/terser", null],\
+          ["esbuild", "npm:0.20.2"],\
+          ["fsevents", "patch:fsevents@npm%3A2.3.3#optional!builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"],\
+          ["less", null],\
+          ["lightningcss", null],\
+          ["postcss", "npm:8.4.38"],\
+          ["rollup", "npm:4.13.2"],\
+          ["sass", null],\
+          ["stylus", null],\
+          ["sugarss", null],\
+          ["terser", null]\
+        ],\
+        "packagePeers": [\
+          "@types/less",\
+          "@types/lightningcss",\
+          "@types/node",\
+          "@types/sass",\
+          "@types/stylus",\
+          "@types/sugarss",\
+          "@types/terser",\
+          "less",\
+          "lightningcss",\
+          "sass",\
+          "stylus",\
+          "sugarss",\
+          "terser"\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["vite-node", [\
@@ -3802,7 +3851,7 @@ const RAW_RUNTIME_STATE =
           ["@types/edge-runtime__vm", null],\
           ["@types/happy-dom", null],\
           ["@types/jsdom", null],\
-          ["@types/node", null],\
+          ["@types/node", "npm:20.12.7"],\
           ["@types/vitest__browser", null],\
           ["@types/vitest__ui", null],\
           ["@vitest/browser", null],\
@@ -3826,7 +3875,7 @@ const RAW_RUNTIME_STATE =
           ["strip-literal", "npm:2.1.0"],\
           ["tinybench", "npm:2.6.0"],\
           ["tinypool", "npm:0.8.3"],\
-          ["vite", "virtual:209e0aec1ba389316de2c518b3bc888a3270710a469cf1ab3bb7a65335a4e787ef6a1c8d6b11b0c20b3fc71192f33c343379bf658c393073601d24c0d6666db9#npm:5.2.7"],\
+          ["vite", "virtual:b1637b7e68af143ee39e18d1ad26ac0e216979d0f6539c6b3603924da4e9dec17f78cf51def1481cb661be6a93cea48d143457e017b1fab8739190fb703a381b#npm:5.2.7"],\
           ["vite-node", "npm:1.4.0"],\
           ["why-is-node-running", "npm:2.2.2"]\
         ],\

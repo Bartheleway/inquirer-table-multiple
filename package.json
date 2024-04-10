@@ -9,6 +9,8 @@
     "type": "git",
     "url": "https://github.com/Bartheleway/inquirer-table-multiple"
   },
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "scripts": {
     "setup": "yarn dlx @yarnpkg/sdks vscode",
     "test": "vitest",
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@inquirer/testing": "^2.1.14",
     "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
     "@vitest/coverage-v8": "^1.4.0",
