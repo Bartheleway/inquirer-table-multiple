@@ -10,5 +10,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies
         run: yarn
+      - name: Compile
+        run: yarn tsc
       - name: Publish to npm
         run: yarn npm publish --otp ${{ secrets.NPM_AUTH_TOKEN }}
