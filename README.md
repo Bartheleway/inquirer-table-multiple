@@ -1,7 +1,8 @@
 # inquirer-table-multiple
 
-<!-- [![Bartheleway](https://circleci.com/gh/Bartheleway/inquirer-table-multiple.svg?style=svg)](https://github.com/Bartheleway/inquirer-table-multiple) -->
-[![codecov](https://codecov.io/gh/Bartheleway/inquirer-table-multiple/branch/main/graph/badge.svg)](https://codecov.io/gh/Bartheleway/inquirer-table-multiple)
+[![npm version](https://badge.fury.io/js/@bartheleway%2Finquirer-table-multiple.svg)](https://badge.fury.io/js/@bartheleway%2Finquirer-table-multiple)
+[![codecov](https://codecov.io/gh/Bartheleway/inquirer-table-multiple/graph/badge.svg?token=Y4RDJ47UZQ)](https://codecov.io/gh/Bartheleway/inquirer-table-multiple)
+![Tests](https://github.com/Bartheleway/inquirer-table-multiple/actions/workflows/main.yml/badge.svg)
 
 Interactive table component for command line interfaces.
 
