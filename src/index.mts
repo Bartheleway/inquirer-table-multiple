@@ -265,7 +265,7 @@ export default createPrompt(
 				if (
 					loop
 					|| (
-						rowIndex + offset > 0
+						rowIndex + offset >= 0
 						&& rowIndex + offset <= bounds.lastRow
 					)
 				) {
@@ -283,7 +283,7 @@ export default createPrompt(
 				setError(undefined)
 
 				if (
-					columnIndex + offset > 0
+					columnIndex + offset >= 0
 					&& columnIndex + offset <= bounds.lastColumn
 				) {
 					setColumnIndex(columnIndex + offset)

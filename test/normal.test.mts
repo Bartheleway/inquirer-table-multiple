@@ -409,6 +409,22 @@ describe('table-multiple prompt [normal]', () => {
 			'└──────────┴───────┴───────┘"'
 		].join('\n'))
 
+		events.keypress('up')
+		events.keypress('up')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
 		events.keypress('left')
 
 		expect(getScreen()).toMatchInlineSnapshot([
@@ -418,9 +434,9 @@ describe('table-multiple prompt [normal]', () => {
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
 			'├──────────┼───────┼───────┤',
-			'│ Test 1   │   ◯   │   ◯   │',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
 			'├──────────┼───────┼───────┤',
-			'│ Test 2   │ [ ◯ ] │   ◯   │',
+			'│ Test 2   │   ◯   │   ◯   │',
 			'└──────────┴───────┴───────┘"'
 		].join('\n'))
 
@@ -434,9 +450,25 @@ describe('table-multiple prompt [normal]', () => {
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
 			'├──────────┼───────┼───────┤',
-			'│ Test 1   │   ◯   │   ◯   │',
+			'│ Test 1   │   ◯   │ [ ◯ ] │',
 			'├──────────┼───────┼───────┤',
-			'│ Test 2   │   ◯   │ [ ◯ ] │',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('left')
+		events.keypress('left')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
 			'└──────────┴───────┴───────┘"'
 		].join('\n'))
 	})
