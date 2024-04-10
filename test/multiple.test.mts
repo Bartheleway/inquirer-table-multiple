@@ -405,7 +405,7 @@ describe('table-multiple prompt [multiple]', () => {
 		])
 	})
 
-	it('cannot select undefined choice when other choice selected', async () => {
+	it('can select undefined choice when other choice selected', async () => {
 		const choices = [
 			{
 				value: '1',
@@ -474,7 +474,7 @@ describe('table-multiple prompt [multiple]', () => {
 			'┌──────────┬───────┬───────┬───────────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │ Untouched │',
 			'├──────────┼───────┼───────┼───────────┤',
-			'│ Test 1   │   ☒   │   ☐   │ [ ☐ ]     │',
+			'│ Test 1   │   ☐   │   ☐   │ [ ☒ ]     │',
 			'├──────────┼───────┼───────┼───────────┤',
 			'│ Test 2   │   ☐   │   ☐   │   ☒       │',
 			'└──────────┴───────┴───────┴───────────┘"'
@@ -482,12 +482,7 @@ describe('table-multiple prompt [multiple]', () => {
 
 		events.keypress('enter')
 
-		await expect(answer).resolves.toEqual([
-			{
-				choice: choices[0],
-				answers: ['A'],
-			}
-		])
+		await expect(answer).resolves.toEqual([])
 	})
 
 	it('goes back to undefined choice when no other choice selected', async () => {
