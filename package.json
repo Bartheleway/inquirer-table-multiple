@@ -5,7 +5,7 @@
   "license": "MIT",
   "packageManager": "yarn@4.1.1",
   "type": "module",
-	"repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/Bartheleway/inquirer-table-multiple"
   },
