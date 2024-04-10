@@ -69,6 +69,10 @@ function isTableColumn<Value extends object>(
 	return !Object.hasOwn(column, 'rowAttributeTarget')
 }
 
+function hasValue (value: (string | number | undefined)): value is (string | number) {
+	return value !== undefined
+}
+
 function printTable<Value>(
 	columns: ReadonlyArray<Value extends object ? TableQuestionColumn<Value> | TableColumn : TableColumn>,
 	rows: ReadonlyArray<TableRow<Value> | Separator>,
@@ -294,15 +298,18 @@ export default createPrompt(
 				const prevItems = values.slice(0, rowIndex)
 				const nextItems = values.slice(rowIndex + 1, values.length)
 
-				let currentValues: ColumnValue[]
+				let currentValues: (string | number)[] = [...values[rowIndex].answers]
+
+				const value = bounds.columns[columnIndex].value
 
 				if (config.multiple) {
-					currentValues = [...values[rowIndex].answers]
 					const valueIndex = currentValues.findIndex(value => bounds.columns[columnIndex].value === value)
 
 					if (valueIndex === -1) {
-						if (bounds.columns[columnIndex].value !== undefined) {
-							currentValues.push(bounds.columns[columnIndex].value)
+						if (hasValue(value)) {
+							currentValues.push(value)
+						} else {
+							currentValues = []
 						}
 					}
 					else {
@@ -310,15 +317,18 @@ export default createPrompt(
 					}
 				}
 				else if (config.allowUnset) {
-					if (values[rowIndex].answers.length) {
+					if (currentValues.length) {
 						currentValues = []
 					}
-					else {
-						currentValues = [bounds.columns[columnIndex].value]
+					else if (hasValue(value)) {
+						currentValues = [value]
 					}
 				}
+				else if (hasValue(value)) {
+					currentValues = [value]
+				}
 				else {
-					currentValues = [bounds.columns[columnIndex].value]
+					currentValues = []
 				}
 
 				setValues([
