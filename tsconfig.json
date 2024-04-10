@@ -1,21 +1,21 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ESNext"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["ESNext"],
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
 		"skipLibCheck": false,
 		"removeComments": true,
 		"sourceMap": true,
 		"outDir": "dist",
 		"declaration": true
-  },
-  "include": ["./src"],
-  "exclude": ["**/*.test.mts"],
+	},
+	"include": ["./src"],
+	"exclude": ["**/*.test.mts"],
 	"ts-node": {
-    "esm": true
-  },
+		"esm": true
+	},
 }
