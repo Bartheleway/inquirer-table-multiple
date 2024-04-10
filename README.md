@@ -1,1 +1,126 @@
 # inquirer-table-multiple
+
+<!-- [![Bartheleway](https://circleci.com/gh/Bartheleway/inquirer-table-multiple.svg?style=svg)](https://github.com/Bartheleway/inquirer-table-multiple) -->
+[![codecov](https://codecov.io/gh/Bartheleway/inquirer-table-multiple/branch/main/graph/badge.svg)](https://codecov.io/gh/Bartheleway/inquirer-table-multiple)
+
+Interactive table component for command line interfaces.
+
+```sh
+Choose between choices? (Press <space> to select, <Up and Down> to move rows,
+<Left and Right> to move columns)
+
+┌──────────┬────────┬────────┐
+│ 1-2 of 2 │ Yes?   │ No?    |
+├──────────┼────────┼────────┤
+│ Choice 1 │ [ ◯ ] │   ◯   |
+├──────────┼────────┼────────┤
+│ Choice 2 │   ◯   │   ◯   |
+└──────────┴────────┴────────┘
+
+```
+
+# Installation
+
+```sh
+npm install @bartheleway/inquirer-table-multiple
+
+yarn add @bartheleway/inquirer-table-multiple
+```
+
+# Usage
+
+```js
+import tableMultiple from '@bartheleway/inquirer-table-multiple'
+
+const answer = await tableMultiple({
+	message: 'Choose between choices?',
+	columns: [
+		{
+			title: 'Yes?'
+			value: 1,
+		},
+		{
+			title: 'No?'
+			value: 0,
+		},
+	],
+	rows: [
+		{
+			value: 1,
+			title: 'Choice 1',
+		},
+		{
+			value: 2,
+			title: 'Choice 2',
+		}
+	],
+})
+```
+
+## Options
+
+| Property | Type | Required | Description | Default |
+| - | - | - | - | - |
+| message | `string` | yes | The question to ask. |
+| columns | `(TableQuestionColumn<Value> \| TableColumn)[]` | yes | The list of columns to display. |
+| rows | `(TableRow \| Separator)[]` | yes | The list of rows. Each row offer a choice which can be multiple (radio vs checkbox vs checkbox-multi) based on the `mode` option. |
+| pageSize | `number` | no | The number of lines to display. | `7` |
+| multiple | `boolean` | no | Indicate if rows allows multiple choices or not. | `false`
+| allowUnset | `boolean` | no | If `multiple` is set to false and this one to `true`, you can unselect the selected choice. | `false`
+| required | `boolean` | no | Indicate if at least one choice is necessary. | `false`
+| loop | `boolean` | no | Indicate if you can loop over table rows.  | `true`
+
+## Columns
+
+Column definition will be used to make the header row of the table.
+
+You can have addition information column by using `TableQuestionColumn<Value>`with an object attribute name of the value used in rows. In this case, `value` of `TableRow` must be an object.
+
+```typescript
+type TableColumn = {
+	title: string,
+	value: string | number | undefined,
+}
+
+type TableQuestionColumn<Value> = {
+	title: string,
+	rowAttributeTarget: keyof Value,
+}
+```
+
+## Rows
+
+Row definition will be used to generate each rows of the table. A disabled row will display as usual but without any selectable choice.
+
+`title` will be used as first column label to differenciate each row.
+
+A separator will span over all columns and display its `separator` param.
+
+```typescript
+type TableRow<Value> = {
+	title: string,
+	value: Value,
+	disabled?: boolean,
+	default?: (string | number)[]
+}
+```
+
+## Returned value
+
+This inquirer prompt will return an array. Each responded row will contains the row value (`choice`) along with selected answers.
+
+```typescript
+type TableAnswer<Value> = {
+	choice: TableRow<Value>[],
+	answers: (string | number)[],
+}
+```
+
+# Advance usage & exemples
+
+You can have a look to [tests files](https://github.com/Bartheleway/inquirer-table-multiple/tree/master/test) to look for advanced usage.
+
+# License
+
+Copyright (c) 2024 Bartheleway
+Licensed under the MIT license.
