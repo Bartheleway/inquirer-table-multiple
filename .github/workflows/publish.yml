@@ -13,4 +13,6 @@ jobs:
       - name: Compile
         run: yarn tsc
       - name: Publish to npm
-        run: yarn npm publish --otp ${{ secrets.NPM_AUTH_TOKEN }}
+        run: yarn npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
