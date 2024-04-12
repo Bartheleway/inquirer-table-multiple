@@ -318,7 +318,15 @@ export default createPrompt(
 				}
 				else if (config.allowUnset) {
 					if (currentValues.length) {
-						currentValues = []
+						if (
+							value !== currentValues[0]
+							&& hasValue(value)
+						) {
+							currentValues = [value]
+						}
+						else {
+							currentValues = []
+						}
 					}
 					else if (hasValue(value)) {
 						currentValues = [value]

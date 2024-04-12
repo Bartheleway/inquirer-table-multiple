@@ -171,12 +171,106 @@ describe('table-multiple prompt [normal]', () => {
 			'└──────────┴───────┴─────────┘"'
 		].join('\n'))
 
+		events.keypress('right')
+		events.keypress('space')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬─────────┐',
+			'│ 1-2 of 2 │ A?    │ Default │',
+			'├──────────┼───────┼─────────┤',
+			'│ Test 1   │   ◯   │ [ ◉ ]   │',
+			'├──────────┼───────┼─────────┤',
+			'│ Test 2   │   ◯   │   ◉     │',
+			'└──────────┴───────┴─────────┘"'
+		].join('\n'))
+
+		events.keypress('enter')
+
+		await expect(answer).resolves.toEqual([])
+	})
+
+	it('handle undefined column value with multiple choices & allowUnset', async () => {
+		const choices = [
+			{
+				value: '1',
+				title: 'Test 1',
+			},
+			{
+				value: '2',
+				title: 'Test 2',
+			}
+		]
+
+		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+			message: 'What do you want?',
+			columns: [
+				{
+					title: 'A?',
+					value: 'A',
+				},
+				{
+					title: 'B?',
+					value: 'B',
+				},
+				{
+					title: 'Default',
+					value: undefined,
+				},
+			],
+			rows: choices,
+			allowUnset: true,
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┬─────────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │   ◉     │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 2   │   ◯   │   ◯   │   ◉     │',
+			'└──────────┴───────┴───────┴─────────┘"'
+		].join('\n'))
+
+		events.keypress('space')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┬─────────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 1   │ [ ◉ ] │   ◯   │   ◯     │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 2   │   ◯   │   ◯   │   ◉     │',
+			'└──────────┴───────┴───────┴─────────┘"',
+		].join('\n'))
+
+		events.keypress('right')
+		events.keypress('space')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┬─────────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 1   │   ◯   │ [ ◉ ] │   ◯     │',
+			'├──────────┼───────┼───────┼─────────┤',
+			'│ Test 2   │   ◯   │   ◯   │   ◉     │',
+			'└──────────┴───────┴───────┴─────────┘"',
+		].join('\n'))
+
 		events.keypress('enter')
 
 		await expect(answer).resolves.toEqual([
 			{
 				choice: choices[0],
-				answers: ['A'],
+				answers: ['B'],
 			}
 		])
 	})
