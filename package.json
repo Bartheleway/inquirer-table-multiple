@@ -20,21 +20,21 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@inquirer/core": "^7.1.0",
+    "@inquirer/core": "^8.0.1",
     "ansi-escapes": "^6.2.1",
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.4",
     "figures": "^6.1.0"
   },
   "devDependencies": {
-    "@inquirer/testing": "^2.1.14",
+    "@inquirer/testing": "^2.1.17",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
-    "@vitest/coverage-v8": "^1.4.0",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "@vitest/coverage-v8": "^1.5.0",
     "eslint": "^8.57.0",
-    "typescript": "^5.4.3",
-    "vitest": "^1.4.0"
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
   }
 }
