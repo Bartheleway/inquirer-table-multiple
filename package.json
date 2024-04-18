@@ -11,6 +11,9 @@
   },
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "setup": "yarn dlx @yarnpkg/sdks vscode",
     "test": "vitest",
