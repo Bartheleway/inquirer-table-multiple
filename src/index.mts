@@ -42,7 +42,8 @@ type TableConfig<Value extends object | string | number> = {
 	required?: boolean,
 	loop?: boolean,
 	allowUnset?: boolean,
-};
+	validate?: (answers: TableAnswers<Value>) => boolean | string | Promise<string | boolean>,
+}
 
 type TableAnswer<Value> = {
 	choice: Readonly<TableRow<Value>>,
@@ -202,6 +203,7 @@ export default createPrompt(
 		const {
 			pageSize = 7,
 			loop = true,
+			validate = () => true,
 		} = config
 
 		const [status, setStatus] = useState('pending')
@@ -240,18 +242,33 @@ export default createPrompt(
 			}
 		}, [config.rows, config.columns])
 
-		useKeypress((key) => {
+		useKeypress(async (key) => {
+			// Ignore keypress while our prompt is doing other processing.
+			if (status !== 'pending') {
+				return
+			}
+
 			if (isEnterKey(key)) {
+				setStatus('loading')
+
 				if (
 					config.required
 					&& !values.find(value => value.answers.length)
 				) {
 					setError('Please select at least one value.')
+					setStatus('pending')
 				}
 				else {
-					setShowHelpTip(false)
-					setStatus('done')
-					done(values.filter(value => value.answers.length))
+					const isValid = await validate(values)
+
+					if (isValid === true) {
+						setShowHelpTip(false)
+						setStatus('done')
+						done(values.filter(value => value.answers.length))
+					} else {
+						setError(isValid || 'You must provide a valid value')
+						setStatus('pending')
+					}
 				}
 			}
 			else if (

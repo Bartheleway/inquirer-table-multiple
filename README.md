@@ -65,6 +65,7 @@ const answer = await tableMultiple({
 | message | `string` | yes | The question to ask. |
 | columns | `(TableQuestionColumn<Value> \| TableColumn)[]` | yes | The list of columns to display. |
 | rows | `(TableRow \| Separator)[]` | yes | The list of rows. Each row offer a choice which can be multiple (radio vs checkbox vs checkbox-multi) based on the `mode` option. |
+| validate | `TableAnswers<Value> => boolean \| string \| Promise<string \| boolean>` | no | On submit, validate the answered content. When returning a string, it'll be used as the error message displayed to the user. Note: returning a rejected promise, we'll assume a code error happened and crash. |
 | pageSize | `number` | no | The number of lines to display. | `7` |
 | multiple | `boolean` | no | Indicate if rows allows multiple choices or not. | `false`
 | allowUnset | `boolean` | no | If `multiple` is set to false and this one to `true`, you can unselect the selected choice. | `false`
@@ -111,6 +112,8 @@ type TableRow<Value> = {
 This inquirer prompt will return an array. Each responded row will contains the row value (`choice`) along with selected answers.
 
 ```typescript
+type TableAnswers<Value> = TableAnswer<Value>[]
+
 type TableAnswer<Value> = {
 	choice: TableRow<Value>[],
 	answers: (string | number)[],

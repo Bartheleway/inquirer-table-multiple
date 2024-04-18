@@ -64,6 +64,175 @@ describe('table-multiple prompt [normal]', () => {
 		])
 	})
 
+	it('handle synchronous validation', async () => {
+		const choices = [
+			{
+				value: '1',
+				title: 'Test 1',
+			},
+			{
+				value: '2',
+				title: 'Test 2',
+			}
+		]
+
+		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+			message: 'What do you want?',
+			columns: [
+				{
+					title: 'A?',
+					value: 'A',
+				},
+				{
+					title: 'B?',
+					value: 'B',
+				},
+			],
+			rows: choices,
+			validate: answers => answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A'))
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('space')
+		events.keypress('enter')
+
+		await Promise.resolve()
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◉ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘',
+			'>> You must provide a valid value"'
+		].join('\n'))
+
+		events.keypress('down')
+		events.keypress('space')
+		events.keypress('enter')
+
+		await Promise.resolve()
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │   ◉   │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │ [ ◉ ] │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		await expect(answer).resolves.toHaveLength(2)
+
+		await expect(answer).resolves.toEqual([
+			{
+				choice: choices[0],
+				answers: ['A'],
+			},
+			{
+				choice: choices[1],
+				answers: ['A'],
+			}
+		])
+	})
+
+	it('handle asynchronous validation', async () => {
+		const choices = [
+			{
+				value: '1',
+				title: 'Test 1',
+			},
+			{
+				value: '2',
+				title: 'Test 2',
+			}
+		]
+
+		const { events, getScreen } = await render(tableMultiple<string>, {
+			message: 'What do you want?',
+			columns: [
+				{
+					title: 'A?',
+					value: 'A',
+				},
+				{
+					title: 'B?',
+					value: 'B',
+				},
+			],
+			rows: choices,
+			validate: answers => new Promise(resolve => {
+				setTimeout(() => {
+					resolve(answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A')) || 'Select all "A"')
+				}, 300)
+			})
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('space')
+		events.keypress('enter')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◉ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		await new Promise<void>(resolve => {
+			setTimeout(() => resolve(), 400)
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"What do you want?',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◉ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘',
+			'>> Select all "A""'
+		].join('\n'))
+	})
+
 	it('unselect when pressing space on focused value (allowUnset)', async () => {
 		const choices = [
 			{
