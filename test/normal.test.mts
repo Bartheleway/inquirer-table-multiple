@@ -28,7 +28,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -43,7 +43,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -93,7 +93,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -111,7 +111,7 @@ describe('table-multiple prompt [normal]', () => {
 		await Promise.resolve()
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -130,7 +130,7 @@ describe('table-multiple prompt [normal]', () => {
 		await Promise.resolve()
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -188,7 +188,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -204,7 +204,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('enter')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"⠋ What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -220,7 +220,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -258,7 +258,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -274,7 +274,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -314,7 +314,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬─────────┐',
@@ -329,7 +329,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ Default │',
@@ -344,7 +344,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ Default │',
@@ -393,7 +393,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┬─────────┐',
@@ -408,7 +408,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
@@ -423,7 +423,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
@@ -473,7 +473,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -520,7 +520,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -557,7 +557,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -572,7 +572,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('up')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -587,7 +587,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('down')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -629,7 +629,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -644,7 +644,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('up')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -660,7 +660,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('down')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -676,7 +676,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('up')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -691,7 +691,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('left')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -707,7 +707,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -723,7 +723,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('left')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -761,7 +761,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -776,7 +776,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('enter')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
@@ -792,7 +792,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -841,7 +841,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -856,7 +856,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -871,7 +871,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want?',
+			'"? What do you want?',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -921,7 +921,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -938,7 +938,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('down')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
@@ -997,7 +997,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left',
 			'and Right> to move columns)',
 			'',
 			'┌──────────┬────────────┬───────┐',

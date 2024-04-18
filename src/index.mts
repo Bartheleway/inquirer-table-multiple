@@ -1,6 +1,7 @@
 import {
 	createPrompt,
 	useState,
+	usePrefix,
 	useKeypress,
 	useMemo,
 	isEnterKey,
@@ -381,8 +382,12 @@ export default createPrompt(
 			error = chalk.red('>> ' + errorMsg)
 		}
 
+		const isLoading = status === 'loading'
+		const prefix = usePrefix({ isLoading })
+
 		return [
 			[
+				prefix,
 				config.message,
 				helpTip,
 			].filter(Boolean).join(' '),
