@@ -215,6 +215,20 @@ describe('table-multiple prompt [normal]', () => {
 			'└──────────┴───────┴───────┘"'
 		].join('\n'))
 
+		events.keypress('down')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"⠋ What do you want?',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◉ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
 		await new Promise<void>(resolve => {
 			setTimeout(() => resolve(), 400)
 		})
