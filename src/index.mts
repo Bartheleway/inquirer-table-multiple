@@ -86,7 +86,6 @@ function printTable<Value>(
 		currentIndex,
 	}: Pagination,
 	columnIndex: number,
-	status: Status,
 	multiple?: boolean,
 ) {
 	const table = new Table({
@@ -143,13 +142,8 @@ function printTable<Value>(
 					}
 				})
 
-				const chalkModifier = (
-					status !== 'done'
-					&& currentIndex === rowIndex - offSet
-				) ? chalk.reset.bold.cyan : chalk.reset
-
 				table.push([
-					chalkModifier(row.title),
+					chalk.reset.bold.cyan(row.title),
 					...columnValues,
 				])
 			}
@@ -369,7 +363,7 @@ export default createPrompt(
 			}
 		})
 
-		const table = printTable(config.columns, config.rows, values, paginate(config.rows, pageSize, rowIndex), columnIndex, status, config.multiple)
+		const table = printTable(config.columns, config.rows, values, paginate(config.rows, pageSize, rowIndex), columnIndex, config.multiple)
 
 		let helpTip = ''
 
@@ -385,15 +379,21 @@ export default createPrompt(
 
 		const prefix = usePrefix({ status })
 
-		return [
+		const printToShell = [
 			[
 				prefix,
 				config.message,
 				helpTip,
 			].filter(Boolean).join(' '),
 			'',
-			table.toString(),
-			`${error}${ansiEscapes.cursorHide}`,
-		].join('\n')
+		]
+
+		if (status !== 'done') {
+			printToShell.push(table.toString())
+		}
+
+		printToShell.push(`${error}${ansiEscapes.cursorHide}`)
+
+		return printToShell.join('\n')
 	}
 )

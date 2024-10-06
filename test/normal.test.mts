@@ -133,15 +133,7 @@ describe('table-multiple prompt [normal]', () => {
 		await Promise.resolve()
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"✔ What do you want?',
-			'',
-			'┌──────────┬───────┬───────┐',
-			'│ 1-2 of 2 │ A?    │ B?    │',
-			'├──────────┼───────┼───────┤',
-			'│ Test 1   │   ◉   │   ◯   │',
-			'├──────────┼───────┼───────┤',
-			'│ Test 2   │ [ ◉ ] │   ◯   │',
-			'└──────────┴───────┴───────┘"'
+			'"✔ What do you want?"',
 		].join('\n'))
 
 		await expect(answer).resolves.toHaveLength(2)
