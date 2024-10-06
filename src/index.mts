@@ -44,6 +44,7 @@ type TableConfig<Value extends object | string | number> = {
 	required?: boolean,
 	loop?: boolean,
 	allowUnset?: boolean,
+	ignoreEmptyAnswers?: boolean,
 	validate?: (answers: TableAnswers<Value>) => boolean | string | Promise<string | boolean>,
 	sumUp?: (answers: TableAnswers<Value>) => string
 }
@@ -202,6 +203,7 @@ export default createPrompt(
 			loop = true,
 			validate = () => true,
 			sumUp = () => '',
+			ignoreEmptyAnswers = true,
 		} = config
 
 		const [status, setStatus] = useState<Status>('idle')
@@ -241,6 +243,8 @@ export default createPrompt(
 		}, [config.rows, config.columns])
 
 		useKeypress(async (key) => {
+			const answers = ignoreEmptyAnswers ? values.filter(row => row.answers.length) : values
+
 			// Ignore keypress while our prompt is doing other processing.
 			if (status !== 'idle') {
 				return
@@ -251,18 +255,18 @@ export default createPrompt(
 
 				if (
 					config.required
-					&& !values.find(value => value.answers.length)
+					&& !answers.find(value => value.answers.length)
 				) {
 					setError('Please select at least one value.')
 					setStatus('idle')
 				}
 				else {
-					const isValid = await validate(values)
+					const isValid = await validate(answers)
 
 					if (isValid === true) {
 						setShowHelpTip(false)
 						setStatus('done')
-						done(values.filter(value => value.answers.length))
+						done(answers)
 					} else {
 						setError(isValid || 'You must provide a valid value')
 						setStatus('idle')
@@ -392,7 +396,8 @@ export default createPrompt(
 		if (status !== 'done') {
 			printToShell.push('', table.toString())
 		} else {
-			const summarized = sumUp(values)
+			const answers = ignoreEmptyAnswers ? values.filter(row => row.answers.length) : values
+			const summarized = sumUp(answers)
 
 			if (summarized) {
 				printToShell.push(summarized)

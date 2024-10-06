@@ -67,6 +67,70 @@ describe('table-multiple prompt [normal]', () => {
 		])
 	})
 
+	it('return all rows', async () => {
+		const choices = [
+			{
+				value: '1',
+				title: 'Test 1',
+			},
+			{
+				value: '2',
+				title: 'Test 2',
+			}
+		]
+
+		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+			message: 'What do you want?',
+			columns: [
+				{
+					title: 'A?',
+					value: 'A',
+				},
+				{
+					title: 'B?',
+					value: 'B',
+				},
+			],
+			rows: choices,
+			ignoreEmptyAnswers: false
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┬───────┐',
+			'│ 1-2 of 2 │ A?    │ B?    │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │   ◯   │',
+			'├──────────┼───────┼───────┤',
+			'│ Test 2   │   ◯   │   ◯   │',
+			'└──────────┴───────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('space')
+		events.keypress('enter')
+
+		await Promise.resolve()
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"✔ What do you want?"',
+		].join('\n'))
+
+		await expect(answer).resolves.toHaveLength(2)
+
+		await expect(answer).resolves.toEqual([
+			{
+				choice: choices[0],
+				answers: ['A'],
+			},
+			{
+				choice: choices[1],
+				answers: [],
+			}
+		])
+	})
+
 	it('handle synchronous validation', async () => {
 		const choices = [
 			{
@@ -92,7 +156,7 @@ describe('table-multiple prompt [normal]', () => {
 				},
 			],
 			rows: choices,
-			validate: (answers: TableAnswers<string>) => answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A'))
+			validate: (answers: TableAnswers<string>) => answers.length === 2 && answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A'))
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
@@ -177,7 +241,7 @@ describe('table-multiple prompt [normal]', () => {
 			rows: choices,
 			validate: (answers: TableAnswers<string>): Promise<boolean | string> => new Promise(resolve => {
 				setTimeout(() => {
-					resolve(answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A')) || 'Select all "A"')
+					resolve(answers.length === 2 && answers.every(answer => answer.answers.length && answer.answers.every(value => value === 'A')) || 'Select all "A"')
 				}, 300)
 			})
 		})

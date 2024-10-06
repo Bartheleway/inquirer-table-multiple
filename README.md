@@ -64,7 +64,8 @@ const answer = await tableMultiple({
 | - | - | - | - | - |
 | allowUnset | `boolean` | no | If `multiple` is set to false and this one to `true`, you can unselect the selected choice. | `false`
 | columns | `(TableQuestionColumn<Value> \| TableColumn)[]` | yes | The list of columns to display. |
-| loop | `boolean` | no | Indicate if you can loop over table rows.  | `true`
+| ignoreEmptyAnswers | `boolean` | no | Indicate if `validate`, `sumUp` and output contains rows with no answers or not. | `true`
+| loop | `boolean` | no | Indicate if you can loop over table rows. | `true`
 | message | `string` | yes | The question to ask. |
 | multiple | `boolean` | no | Indicate if rows allows multiple choices or not. | `false`
 | pageSize | `number` | no | The number of lines to display. | `7` |
@@ -110,7 +111,7 @@ type TableRow<Value> = {
 
 ## Returned value
 
-This inquirer prompt will return an array. Each responded row will contains the row value (`choice`) along with selected answers.
+This inquirer prompt will return an array. Each responded row will contains the row value (`choice`) along with selected answers. By default only rows with answers will be returned, you can change this with `ignoreEmptyAnswers: false`
 
 ```typescript
 type TableAnswers<Value> = TableAnswer<Value>[]
