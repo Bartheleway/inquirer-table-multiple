@@ -11,6 +11,7 @@ import {
 	KeypressEvent,
 	isSpaceKey,
 	Separator,
+	Status,
 } from '@inquirer/core'
 import chalk from 'chalk'
 import figures from 'figures'
@@ -85,7 +86,7 @@ function printTable<Value>(
 		currentIndex,
 	}: Pagination,
 	columnIndex: number,
-	status: string,
+	status: Status,
 	multiple?: boolean,
 ) {
 	const table = new Table({
@@ -207,7 +208,7 @@ export default createPrompt(
 			validate = () => true,
 		} = config
 
-		const [status, setStatus] = useState('pending')
+		const [status, setStatus] = useState<Status>('idle')
 		const [rowIndex, setRowIndex] = useState(0)
 		const [columnIndex, setColumnIndex] = useState(0)
 		const [showHelpTip, setShowHelpTip] = useState(true)
@@ -245,7 +246,7 @@ export default createPrompt(
 
 		useKeypress(async (key) => {
 			// Ignore keypress while our prompt is doing other processing.
-			if (status !== 'pending') {
+			if (status !== 'idle') {
 				return
 			}
 
@@ -257,7 +258,7 @@ export default createPrompt(
 					&& !values.find(value => value.answers.length)
 				) {
 					setError('Please select at least one value.')
-					setStatus('pending')
+					setStatus('idle')
 				}
 				else {
 					const isValid = await validate(values)
@@ -268,7 +269,7 @@ export default createPrompt(
 						done(values.filter(value => value.answers.length))
 					} else {
 						setError(isValid || 'You must provide a valid value')
-						setStatus('pending')
+						setStatus('idle')
 					}
 				}
 			}
@@ -382,8 +383,7 @@ export default createPrompt(
 			error = chalk.red('>> ' + errorMsg)
 		}
 
-		const isLoading = status === 'loading'
-		const prefix = usePrefix({ isLoading })
+		const prefix = usePrefix({ status })
 
 		return [
 			[
