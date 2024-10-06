@@ -401,6 +401,8 @@ export default createPrompt(
 
 			if (summarized) {
 				printToShell.push(summarized)
+			} else {
+				printToShell[printToShell.length - 1] += ` (answered, no preview)`
 			}
 		}
 

@@ -114,7 +114,7 @@ describe('table-multiple prompt [normal]', () => {
 		await Promise.resolve()
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"✔ What do you want?"',
+			'"✔ What do you want? (answered, no preview)"',
 		].join('\n'))
 
 		await expect(answer).resolves.toHaveLength(2)
@@ -197,7 +197,7 @@ describe('table-multiple prompt [normal]', () => {
 		await Promise.resolve()
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			'"✔ What do you want?"',
+			'"✔ What do you want? (answered, no preview)"',
 		].join('\n'))
 
 		await expect(answer).resolves.toHaveLength(2)
