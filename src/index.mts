@@ -52,7 +52,7 @@ type TableAnswer<Value> = {
 	answers: ReadonlyArray<(string | number)>,
 }
 
-type TableAnswers<Value> = ReadonlyArray<TableAnswer<Value>>
+export type TableAnswers<Value> = ReadonlyArray<TableAnswer<Value>>
 
 type Pagination = {
 	firstIndex: number,
