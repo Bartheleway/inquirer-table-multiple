@@ -124,6 +124,12 @@ type TableAnswer<Value> = {
 
 You can have a look to [tests files](https://github.com/Bartheleway/inquirer-table-multiple/tree/master/test) to look for advanced usage.
 
+# Testing
+
+Some OS doesn't trim test result lines so you can set an environment variable `FIX_OS_EXTRA_SPACE=1` to fix that and enable having consistent result with local & remote runner.
+
+The simpliest way is to replace `test` entry value in `package.json` with `FIX_OS_EXTRA_SPACE=1 && vitest`.
+
 # License
 
 Copyright (c) 2024 Bartheleway
