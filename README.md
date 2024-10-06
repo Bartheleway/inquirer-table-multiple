@@ -62,15 +62,15 @@ const answer = await tableMultiple({
 
 | Property | Type | Required | Description | Default |
 | - | - | - | - | - |
-| message | `string` | yes | The question to ask. |
+| allowUnset | `boolean` | no | If `multiple` is set to false and this one to `true`, you can unselect the selected choice. | `false`
 | columns | `(TableQuestionColumn<Value> \| TableColumn)[]` | yes | The list of columns to display. |
+| loop | `boolean` | no | Indicate if you can loop over table rows.  | `true`
+| message | `string` | yes | The question to ask. |
+| multiple | `boolean` | no | Indicate if rows allows multiple choices or not. | `false`
+| pageSize | `number` | no | The number of lines to display. | `7` |
+| required | `boolean` | no | Indicate if at least one choice is necessary. | `false`
 | rows | `(TableRow \| Separator)[]` | yes | The list of rows. Each row offer a choice which can be multiple (radio vs checkbox vs checkbox-multi) based on the `mode` option. |
 | validate | `TableAnswers<Value> => boolean \| string \| Promise<string \| boolean>` | no | On submit, validate the answered content. When returning a string, it'll be used as the error message displayed to the user. Note: returning a rejected promise, we'll assume a code error happened and crash. |
-| pageSize | `number` | no | The number of lines to display. | `7` |
-| multiple | `boolean` | no | Indicate if rows allows multiple choices or not. | `false`
-| allowUnset | `boolean` | no | If `multiple` is set to false and this one to `true`, you can unselect the selected choice. | `false`
-| required | `boolean` | no | Indicate if at least one choice is necessary. | `false`
-| loop | `boolean` | no | Indicate if you can loop over table rows.  | `true`
 
 ## Columns
 
