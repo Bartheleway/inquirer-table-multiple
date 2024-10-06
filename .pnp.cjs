@@ -30,6 +30,7 @@ const RAW_RUNTIME_STATE =
           ["@inquirer/core", "npm:9.2.1"],\
           ["@inquirer/testing", "npm:2.1.34"],\
           ["@types/inquirer", "npm:9.0.7"],\
+          ["@types/mute-stream", "npm:0.0.4"],\
           ["@types/node", "npm:22.7.4"],\
           ["@typescript-eslint/eslint-plugin", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.18.0"],\
           ["@typescript-eslint/parser", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.18.0"],\
@@ -113,6 +114,7 @@ const RAW_RUNTIME_STATE =
           ["@inquirer/core", "npm:9.2.1"],\
           ["@inquirer/testing", "npm:2.1.34"],\
           ["@types/inquirer", "npm:9.0.7"],\
+          ["@types/mute-stream", "npm:0.0.4"],\
           ["@types/node", "npm:22.7.4"],\
           ["@typescript-eslint/eslint-plugin", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.18.0"],\
           ["@typescript-eslint/parser", "virtual:335c2cb53cad1f736caac0fe5a6142b307746a459f14c2c75b7c589f7fc25c502642f1243a8f914a6c154767812f14f2b09d48651d63fd096e8df60f6c641d6a#npm:7.18.0"],\
