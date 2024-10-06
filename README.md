@@ -70,6 +70,7 @@ const answer = await tableMultiple({
 | pageSize | `number` | no | The number of lines to display. | `7` |
 | required | `boolean` | no | Indicate if at least one choice is necessary. | `false`
 | rows | `(TableRow \| Separator)[]` | yes | The list of rows. Each row offer a choice which can be multiple (radio vs checkbox vs checkbox-multi) based on the `mode` option. |
+| sumUp | `TableAnswers<Value> => string` | no | This allow to display a resume of selected answers to user after validation. |
 | validate | `TableAnswers<Value> => boolean \| string \| Promise<string \| boolean>` | no | On submit, validate the answered content. When returning a string, it'll be used as the error message displayed to the user. Note: returning a rejected promise, we'll assume a code error happened and crash. |
 
 ## Columns

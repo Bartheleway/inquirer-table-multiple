@@ -45,6 +45,7 @@ type TableConfig<Value extends object | string | number> = {
 	loop?: boolean,
 	allowUnset?: boolean,
 	validate?: (answers: TableAnswers<Value>) => boolean | string | Promise<string | boolean>,
+	sumUp?: (answers: TableAnswers<Value>) => string
 }
 
 type TableAnswer<Value> = {
@@ -200,6 +201,7 @@ export default createPrompt(
 			pageSize = 7,
 			loop = true,
 			validate = () => true,
+			sumUp = () => '',
 		} = config
 
 		const [status, setStatus] = useState<Status>('idle')
@@ -385,11 +387,16 @@ export default createPrompt(
 				config.message,
 				helpTip,
 			].filter(Boolean).join(' '),
-			'',
 		]
 
 		if (status !== 'done') {
-			printToShell.push(table.toString())
+			printToShell.push('', table.toString())
+		} else {
+			const summarized = sumUp(values)
+
+			if (summarized) {
+				printToShell.push(summarized)
+			}
 		}
 
 		printToShell.push(`${error}${ansiEscapes.cursorHide}`)

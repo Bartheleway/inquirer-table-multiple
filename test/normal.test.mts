@@ -1021,6 +1021,74 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 	})
 
+	it('format answers as requested', async () => {
+		const choices = [
+			{
+				value: '1',
+				title: 'Test 1',
+			},
+			{
+				value: '2',
+				title: 'Test 2',
+			}
+		]
+
+		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+			message: 'What do you want?',
+			columns: [
+				{
+					title: 'A?',
+					value: 'A',
+				},
+			],
+			rows: choices,
+			sumUp: (answers: TableAnswers<string>) => answers.map(answer => answer.answers.length ? `${answer.choice.title}: ${answer.answers.join(',')}` : '').filter(Boolean).join('; ')
+		})
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
+			'and Right> to move columns)',
+			'',
+			'┌──────────┬───────┐',
+			'│ 1-2 of 2 │ A?    │',
+			'├──────────┼───────┤',
+			'│ Test 1   │ [ ◯ ] │',
+			'├──────────┼───────┤',
+			'│ Test 2   │   ◯   │',
+			'└──────────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('space')
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"? What do you want?',
+			'',
+			'┌──────────┬───────┐',
+			'│ 1-2 of 2 │ A?    │',
+			'├──────────┼───────┤',
+			'│ Test 1   │ [ ◉ ] │',
+			'├──────────┼───────┤',
+			'│ Test 2   │   ◯   │',
+			'└──────────┴───────┘"'
+		].join('\n'))
+
+		events.keypress('enter')
+
+		await Promise.resolve()
+
+		expect(getScreen()).toMatchInlineSnapshot([
+			'"✔ What do you want?',
+			'Test 1: A"',
+		].join('\n'))
+
+		await expect(answer).resolves.toEqual([
+			{
+				choice: choices[0],
+				answers: ['A'],
+			}
+		])
+	})
+
 	it('throws error if missing columns', async () => {
 		const choices = [
 			{
