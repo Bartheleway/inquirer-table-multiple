@@ -1,7 +1,14 @@
-import { describe, it, expect } from 'vitest'
+import {
+	describe,
+	it,
+	expect,
+} from 'vitest'
 import { render } from '@inquirer/testing'
 import tableMultiple, { TableAnswers } from '../src/index.mjs'
-import { Separator } from '@inquirer/core'
+import {
+	Separator,
+	ValidationError,
+} from '@inquirer/core'
 
 // Some OS doesn't trim output in test, this ease having the correct test results on local & remote runner
 const EXTRA_SPACE = process.env.FIX_OS_EXTRA_SPACE ? ' ' : ''
@@ -1171,7 +1178,7 @@ describe('table-multiple prompt [normal]', () => {
 			rows: choices,
 		})
 
-		await expect(answer).rejects.toEqual(new Error('[table-multiple prompt] No selectable choices. All columns are not selectable or have undefined value.'))
+		await expect(answer).rejects.toEqual(new ValidationError('[table-multiple prompt] No selectable choices. All columns are not selectable or have undefined value.'))
 	})
 
 	it('throws error if columns don\'t have a selectable choice', async () => {
@@ -1201,7 +1208,7 @@ describe('table-multiple prompt [normal]', () => {
 			rows: choices,
 		})
 
-		await expect(answer).rejects.toEqual(new Error('[table-multiple prompt] No selectable choices. All columns are not selectable or have undefined value.'))
+		await expect(answer).rejects.toEqual(new ValidationError('[table-multiple prompt] No selectable choices. All columns are not selectable or have undefined value.'))
 	})
 
 	it('throws error if missing rows', async () => {
@@ -1216,6 +1223,6 @@ describe('table-multiple prompt [normal]', () => {
 			rows: [],
 		})
 
-		await expect(answer).rejects.toEqual(new Error('[table-multiple prompt] No selectable choices. Missing rows or all are disabled.'))
+		await expect(answer).rejects.toEqual(new ValidationError('[table-multiple prompt] No selectable choices. Missing rows or all are disabled.'))
 	})
 })
