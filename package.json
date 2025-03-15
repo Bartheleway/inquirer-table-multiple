@@ -1,6 +1,6 @@
 {
   "name": "@bartheleway/inquirer-table-multiple",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Bartheleway",
   "license": "MIT",
   "packageManager": "yarn@4.7.0",
