@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "author": "Bartheleway",
   "license": "MIT",
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.13.0",
   "type": "module",
   "repository": {
     "type": "git",
