@@ -17,5 +17,5 @@
 	"exclude": ["**/*.test.mts"],
 	"ts-node": {
 		"esm": true
-	},
+	}
 }

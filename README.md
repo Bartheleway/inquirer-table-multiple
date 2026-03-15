@@ -20,7 +20,7 @@ Choose between choices? (Press <space> to select, <Up and Down> to move rows,
 
 ```
 
-# Installation
+## Installation
 
 ```sh
 npm install @bartheleway/inquirer-table-multiple
@@ -28,7 +28,7 @@ npm install @bartheleway/inquirer-table-multiple
 yarn add @bartheleway/inquirer-table-multiple
 ```
 
-# Usage
+## Usage
 
 ```js
 import tableMultiple from '@bartheleway/inquirer-table-multiple'
@@ -122,17 +122,17 @@ type TableAnswer<Value> = {
 }
 ```
 
-# Advance usage & exemples
+## Advance usage & exemples
 
 You can have a look to [tests files](https://github.com/Bartheleway/inquirer-table-multiple/tree/master/test) to look for advanced usage.
 
-# Testing
+## Testing
 
 Some OS doesn't trim test result lines so you can set an environment variable `FIX_OS_EXTRA_SPACE=1` to fix that and enable having consistent result with local & remote runner.
 
 The simpliest way is to replace `test` entry value in `package.json` with `FIX_OS_EXTRA_SPACE=1 && vitest`.
 
-# License
+## License
 
 Copyright (c) 2024 Bartheleway
 Licensed under the MIT license.

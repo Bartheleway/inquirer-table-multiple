@@ -10,9 +10,6 @@ import {
 	ValidationError,
 } from '@inquirer/core'
 
-// Some OS doesn't trim output in test, this ease having the correct test results on local & remote runner
-const EXTRA_SPACE = process.env.FIX_OS_EXTRA_SPACE ? ' ' : ''
-
 describe('table-multiple prompt [normal]', () => {
 	it('handle simple use case', async () => {
 		const choices = [
@@ -26,7 +23,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -38,8 +35,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -51,6 +47,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -65,6 +63,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -86,7 +86,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -103,8 +103,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -118,7 +117,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 		events.keypress('enter')
 
-		await Promise.resolve()
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"✔ What do you want? (answered, no preview)"',
@@ -150,7 +149,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -167,8 +166,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -182,7 +180,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 		events.keypress('enter')
 
-		await Promise.resolve()
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -201,7 +199,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('space')
 		events.keypress('enter')
 
-		await Promise.resolve()
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"✔ What do you want? (answered, no preview)"',
@@ -233,7 +231,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { events, getScreen } = await render(tableMultiple<string>, {
+		const { events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -254,8 +252,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -268,6 +265,8 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('space')
 		events.keypress('enter')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -283,21 +282,7 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('down')
 
-		expect(getScreen()).toMatchInlineSnapshot([
-			'"? What do you want?',
-			'',
-			'┌──────────┬───────┬───────┐',
-			'│ 1-2 of 2 │ A?    │ B?    │',
-			'├──────────┼───────┼───────┤',
-			'│ Test 1   │ [ ◉ ] │   ◯   │',
-			'├──────────┼───────┼───────┤',
-			'│ Test 2   │   ◯   │   ◯   │',
-			'└──────────┴───────┴───────┘"'
-		].join('\n'))
-
-		await new Promise<void>(resolve => {
-			setTimeout(() => resolve(), 400)
-		})
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -325,7 +310,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { events, getScreen } = await render(tableMultiple<string>, {
+		const { events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -338,8 +323,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -352,6 +336,8 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('space')
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -378,7 +364,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -394,8 +380,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ Default │',
@@ -407,6 +392,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -423,6 +410,8 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 		events.keypress('space')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
 			'',
@@ -436,6 +425,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([])
 	})
@@ -452,7 +443,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -473,8 +464,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┬─────────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │ Default │',
@@ -486,6 +476,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -502,6 +494,8 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 		events.keypress('space')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
 			'',
@@ -515,6 +509,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -537,7 +533,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -553,8 +549,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -566,6 +561,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -600,8 +597,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -625,7 +621,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { events, getScreen } = await render(tableMultiple<string>, {
+		const { events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -637,8 +633,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -651,9 +646,10 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('up')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -666,9 +662,10 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('down')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -692,7 +689,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { events, getScreen } = await render(tableMultiple<string>, {
+		const { events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -709,8 +706,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -724,8 +720,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('up')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -739,9 +734,10 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('down')
 		events.keypress('down')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -755,9 +751,10 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('up')
 		events.keypress('up')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -771,8 +768,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('left')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -786,9 +782,10 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 		events.keypress('right')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -803,8 +800,7 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('left')
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -828,7 +824,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -841,8 +837,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -855,9 +850,10 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('enter')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -870,6 +866,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -884,6 +882,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -905,7 +905,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -921,8 +921,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-2 of 2 │ A?    │ B?    │',
@@ -934,6 +933,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -950,6 +951,8 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 		events.keypress('space')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
 			'',
@@ -963,6 +966,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -985,7 +990,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -1001,8 +1006,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-3 of 3 │ A?    │ B?    │',
@@ -1017,9 +1021,10 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('down')
 
+		await nextRender()
+
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┬───────┐',
 			'│ 1-3 of 3 │ A?    │ B?    │',
@@ -1035,6 +1040,8 @@ describe('table-multiple prompt [normal]', () => {
 		events.keypress('right')
 		events.keypress('space')
 		events.keypress('enter')
+
+		await nextRender()
 
 		await expect(answer).resolves.toEqual([
 			{
@@ -1077,8 +1084,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬────────────┬───────┐',
 			'│ 1-3 of 3 │ Test value │ A?    │',
@@ -1104,7 +1110,7 @@ describe('table-multiple prompt [normal]', () => {
 			}
 		]
 
-		const { answer, events, getScreen } = await render(tableMultiple<string>, {
+		const { answer, events, getScreen, nextRender } = await render(tableMultiple<string>, {
 			message: 'What do you want?',
 			columns: [
 				{
@@ -1117,8 +1123,7 @@ describe('table-multiple prompt [normal]', () => {
 		})
 
 		expect(getScreen()).toMatchInlineSnapshot([
-			`"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left${EXTRA_SPACE}`,
-			'and Right> to move columns)',
+			'"? What do you want? (Press <space> to select, <Up and Down> to move rows, <Left and Right> to move columns)',
 			'',
 			'┌──────────┬───────┐',
 			'│ 1-2 of 2 │ A?    │',
@@ -1130,6 +1135,8 @@ describe('table-multiple prompt [normal]', () => {
 		].join('\n'))
 
 		events.keypress('space')
+
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"? What do you want?',
@@ -1145,7 +1152,7 @@ describe('table-multiple prompt [normal]', () => {
 
 		events.keypress('enter')
 
-		await Promise.resolve()
+		await nextRender()
 
 		expect(getScreen()).toMatchInlineSnapshot([
 			'"✔ What do you want?',
